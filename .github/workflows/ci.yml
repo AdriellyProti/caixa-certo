@@ -1,0 +1,37 @@
+# Pipeline de Integração Contínua do Caixa Certo
+name: CI
+
+# Trigger: roda a cada push na main e a cada Pull Request
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-e-testes:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout: baixa o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Prepara o Node.js (mesma versão do computador)
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # Install: instala as dependências exatas do package-lock.json
+      - name: Instalar dependências
+        run: npm ci
+
+      # Build: compila o app
+      - name: Build
+        run: npx ng build
+
+      # Test + Coverage: roda os testes e mede a cobertura
+      - name: Testes com cobertura
+        run: npx ng test --watch=false --coverage
