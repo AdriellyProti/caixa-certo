@@ -71,3 +71,14 @@ export function formatarMoeda(valor: number): string {
 function arredondar(valor: number): number {
   return Math.round(valor * 100) / 100;
 }
+
+
+// Converte o que o usuário digitou ("50", "50,00", "1.500,00") em número
+export function converterValor(texto: string): number {
+  const limpo = texto.replace('R$', '').replace(/\s/g, '');
+  const normalizado = limpo.includes(',')
+    ? limpo.replace(/\./g, '').replace(',', '.')
+    : limpo;
+  const numero = Number(normalizado);
+  return Number.isFinite(numero) ? Math.round(numero * 100) / 100 : NaN;
+}
