@@ -45,13 +45,19 @@ import {
                 <strong>{{ dataCurta(l.data) }} · {{ l.categoria || (l.tipo === 'entrada' ? 'Entrada' : 'Despesa') }}</strong>
                 <span class="forma">{{ formaRotulo[l.forma_pagamento] }}</span>
               </div>
-              <span class="valor" [class.positivo]="l.tipo === 'entrada'" [class.negativo]="l.tipo === 'saida'">
-                {{ l.tipo === 'entrada' ? '+' : '−' }} {{ moeda(l.valor) }}
-              </span>
+              <div class="direita">
+                <span class="valor" [class.positivo]="l.tipo === 'entrada'" [class.negativo]="l.tipo === 'saida'">
+                  {{ l.tipo === 'entrada' ? '+' : '−' }} {{ moeda(l.valor) }}
+                </span>
+                <button type="button" class="excluir" (click)="excluir(l)"
+                  [attr.aria-label]="'Excluir lançamento de ' + dataCurta(l.data) + ' no valor de ' + moeda(l.valor)">
+                  Excluir
+                </button>
+              </div>
             </li>
           }
         </ul>
-      }
+          }
     </main>
   `,
   styles: [`
@@ -69,6 +75,9 @@ import {
     .lista li { display: flex; justify-content: space-between; align-items: center; min-height: 56px; border-bottom: 1px solid #eee; gap: 8px; }
     .forma { display: block; font-size: 14px; color: #555; }
     .valor { font-weight: 700; white-space: nowrap; }
+    .lista li { padding: 8px 0; }
+    .direita { display: flex; flex-direction: column; align-items: flex-end; }
+    .excluir { min-height: 44px; min-width: 44px; padding: 0 8px; background: none; border: none; color: #C62828; font-size: 14px; text-decoration: underline; cursor: pointer; }
   `],
 })
 export class Resumo implements OnInit {
@@ -123,7 +132,20 @@ export class Resumo implements OnInit {
       this.carregando.set(false);
     }
   }
+  // Ajuste da validação 1: pede confirmação para evitar exclusão sem querer
+  async excluir(l: Lancamento) {
+    if (!l.id) return;
+    if (!confirm(`Excluir este lançamento de ${this.moeda(l.valor)}?`)) return;
 
+    try {
+      await this.service.excluir(l.id);
+      // Tira da lista; o resumo (computed) recalcula sozinho
+      this.lista.update((atual) => atual.filter((item) => item.id !== l.id));
+    } catch (e) {
+      console.error('Erro ao excluir lançamento:', e);
+      alert('Não foi possível excluir. Tente de novo.');
+    }
+  }
   // "2026-11-08" vira "08/11"
   dataCurta(iso: string): string {
     return `${iso.slice(8, 10)}/${iso.slice(5, 7)}`;
