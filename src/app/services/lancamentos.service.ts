@@ -28,4 +28,15 @@ export class LancamentosService {
     if (error) throw error;
     return (data ?? []) as Lancamento[];
   }
+  
+  // Ajuste da validação 1: excluir lançamento registrado errado
+  // O RLS garante que só é possível excluir os próprios lançamentos
+  async excluir(id: string): Promise<void> {
+    const { error } = await this.supabase.client
+      .from('lancamentos')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
+  }
 }

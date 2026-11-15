@@ -1,6 +1,12 @@
 /* Estilos globais do Caixa Certo - mesmas cores do protótipo */
 * { box-sizing: border-box; }
 
+/* Ajuste da validação 1: o Safari (iPhone) deixava o texto dos botões azul */
+button {
+  font-family: inherit;
+  color: #1a1a1a;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
