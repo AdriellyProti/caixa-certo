@@ -62,3 +62,38 @@ input, select {
   text-align: center;
   color: #2E7D32;
 }
+/* ===== Versão 2: estilos compartilhados entre as telas ===== */
+.voltar { text-align: left; margin-top: 0; }
+.rotulo { font-weight: 600; margin: 16px 0 6px; }
+.ajuda { font-size: 14px; color: #555; margin: 6px 0 0; }
+.aviso { background: #FFF8E1; border: 1px solid #F9A825; border-radius: 8px; padding: 10px 12px; margin: 12px 0 0; }
+
+/* Botões de opção (tipo, forma de pagamento, período...) */
+.grupo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.sem-margem { margin-top: 0; }
+.opcao { min-height: 48px; font-size: 16px; border: 2px solid #999; border-radius: 8px; background: #fff; cursor: pointer; }
+.selecionada { border-color: #1a1a1a; background: #f0f0f0; font-weight: 600; }
+
+/* Sugestões rápidas (categorias, serviços, produtos) */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.chip { min-height: 44px; padding: 0 14px; font-size: 15px; border: 1px solid #999; border-radius: 22px; background: #fff; cursor: pointer; }
+.chip.selecionada { border: 2px solid #1a1a1a; }
+
+/* Cartões e listas */
+.card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-top: 16px; }
+.card-titulo { margin: 0 0 8px; color: #555; font-weight: 600; }
+.linha { display: flex; justify-content: space-between; gap: 8px; margin: 6px 0; }
+.positivo { color: #2E7D32; }
+.negativo { color: #C62828; }
+.lista { list-style: none; padding: 0; margin: 8px 0 0; }
+.lista li { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 56px; padding: 8px 0; border-bottom: 1px solid #eee; }
+.detalhe { display: block; font-size: 14px; color: #555; }
+.acoes-item { display: flex; flex-direction: column; align-items: flex-end; }
+.acao-texto { min-height: 44px; min-width: 44px; padding: 0 8px; background: none; border: none; font-size: 14px; text-decoration: underline; cursor: pointer; color: #1a1a1a; }
+.acao-texto.perigo { color: #C62828; }
+.etiqueta { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
+.etiqueta.ok { background: #E8F5E9; color: #1B5E20; }
+.etiqueta.alerta { background: #FFEBEE; color: #B71C1C; }
+.etiqueta.atencao { background: #FFF8E1; color: #7A5B00; }
+.duas-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.duas-colunas label { margin-top: 12px; }

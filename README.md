@@ -18,6 +18,19 @@ Parceiro do projeto: **JP Barber Hair** (Jardim Maracanã, São Paulo/SP).
 - **RF04** – Registro de despesa, com categoria
 - **RF05** – Resumo do período (hoje, semana e mês), com lucro ou prejuízo
 
+## Versão 2
+
+- **RF06** – Editar lançamento
+- **RF07** – Resumo de períodos anteriores (dia, semana e mês)
+- **RF08** – Fechamento do caixa: entradas por forma de pagamento
+- **RF09** – Despesas por categoria e categorias padronizadas, com sugestões
+- **RF10** – Contas fixas com vencimento, situação do mês e registro de pagamento
+- **RF11** – Cadastro de serviços com preço e faturamento por serviço
+- **RF12** – Cadastro de produtos (custo, venda, estoque) e lucro por produto
+- **RF13** – Estoque automático (venda tira, compra soma) com alerta de estoque mínimo
+
+Para atualizar um banco que já existe, rode `supabase/migracao-002-melhorias.sql` no SQL Editor do Supabase.
+
 ## Tecnologias
 
 - **Angular 22** (TypeScript): interface e lógica de negócio (services)
