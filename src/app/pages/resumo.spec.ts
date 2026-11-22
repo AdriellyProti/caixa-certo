@@ -16,7 +16,7 @@ describe('Resumo (integração: tela + service + regras de cálculo)', () => {
       imports: [Resumo],
       providers: [
         provideRouter([]),
-        { provide: LancamentosService, useValue: { listarDesde: async () => dados } },
+        { provide: LancamentosService, useValue: { listarEntre: async () => dados } },
       ],
     }).compileComponents();
 
@@ -34,5 +34,34 @@ describe('Resumo (integração: tela + service + regras de cálculo)', () => {
     expect(texto).toContain('Despesas: R$ 20,00');
     expect(texto).toContain('13/11 · Corte');
     expect(texto).toContain('13/11 · Produtos');
+    // Fechamento do caixa por forma de pagamento
+    expect(texto).toContain('PIX');
+    expect(texto).toContain('Para onde foi o dinheiro');
+  });
+});
+describe('Resumo com venda de produto', () => {
+  it('mostra o lucro por produto', async () => {
+    const dados: Lancamento[] = [
+      { id: '1', tipo: 'entrada', valor: 20, quantidade: 2, custo_unitario: 5, produto_id: 'p1', data: '2026-11-13', forma_pagamento: 'pix', categoria: 'Pomada' },
+    ];
+
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [Resumo],
+      providers: [
+        provideRouter([]),
+        { provide: LancamentosService, useValue: { listarEntre: async () => dados } },
+      ],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(Resumo);
+    await fixture.whenStable();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await fixture.whenStable();
+
+    const texto: string = fixture.nativeElement.textContent.replace(/\s+/g, ' ');
+    expect(texto).toContain('Lucro por produto');
+    expect(texto).toContain('Pomada (2 un.)');
+    expect(texto).toContain('+ R$ 10,00');
   });
 });
